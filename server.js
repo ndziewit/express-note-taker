@@ -44,3 +44,17 @@ app.post("/api/notes", function(req, res) {
         }); 
     }
 );
+
+app.delete('/api/notes/:id', function(req,res) {
+    var toDelete = req.params.id;
+    notes = notes.filter(notes => notes['id'] !== toDelete)
+    fs.writeFile("db/db.json", JSON.stringify(notes), (err) => { 
+      if (err) 
+        console.log(err); 
+      else { 
+        res.json(notes);
+      } 
+    }); 
+    res.status(200);
+  }
+  );
