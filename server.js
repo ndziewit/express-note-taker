@@ -30,3 +30,17 @@ app.listen(PORT, function() {
     console.log("Application is now listening on port" + PORT)
 }
 );
+
+app.post("/api/notes", function(req, res) {
+    var newNote = req.body;
+    notes.push(newNote);
+    let data = JSON.stringify(notes)
+    fs.writeFile("db/db.json", data, (err) => { 
+        if (err) 
+            console.log(err); 
+        else { 
+            res.json(data);
+        } 
+        }); 
+    }
+);
