@@ -1,16 +1,20 @@
+//Express dependencies
 var path = require("path");
 var fs = require("fs");
-var express = require("express")
+var express = require("express");
 
+//Express variables
 var app = express();
 var PORT = process.env.PORT || 3001;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('public'))
+app.use(express.static("public"))
 
+//Blank note variable
 var notes = [];
 
+//Express routes to pages
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "public/index.html"));
 }
@@ -26,11 +30,13 @@ app.get("/api/notes", function(req,res) {
 }
 );
 
+//Console logs when a successful connection is made
 app.listen(PORT, function() {
     console.log("Application is now listening on port" + PORT)
 }
 );
 
+//Saves a new note
 app.post("/api/notes", function(req, res) {
     var newNote = req.body;
     notes.push(newNote);
@@ -45,6 +51,7 @@ app.post("/api/notes", function(req, res) {
     }
 );
 
+//Deletes a saved note
 app.delete('/api/notes/:id', function(req,res) {
     var toDelete = req.params.id;
     notes = notes.filter(notes => notes['id'] !== toDelete)
